@@ -7,7 +7,7 @@ demonstrate web and API automation, CI/CD and AI-assisted defect analysis.
 > Uses only a public demo app and dummy data. No employer code or data.
 
 ## Roadmap
-- [x] Phase 1: UI automation with page objects and fixtures (in progress)
+- [x] Phase 1: UI automation with page objects and fixtures (registration, login, open account, funds transfer with balance checks)
 - [ ] Phase 2: API automation (Playwright API testing + Postman/Bruno collection)
 - [ ] Phase 3: GitHub Actions CI with HTML report, traces and screenshots
 - [ ] Phase 4: AI-assisted failure analysis (group failures, suggest root causes)
@@ -16,7 +16,7 @@ demonstrate web and API automation, CI/CD and AI-assisted defect analysis.
 ```
 src/pages/      Page objects (one class per page)
 src/fixtures/   Custom Playwright fixtures wiring pages and test data
-src/utils/      Test data builders
+src/utils/      Test data builders and helpers
 tests/ui/       UI specs, tagged @smoke / @regression
 ```
 
@@ -33,5 +33,6 @@ Override the target with `BASE_URL=https://your-host/parabank/ npm test`.
 
 ## Design notes
 - Every test registers its own unique user, so tests are independent and parallel-safe.
+- Balance checks read the values before and after a transfer instead of hard-coding amounts, so they survive changes in the demo data.
 - Locators prefer roles and visible text, with IDs only where the app gives no better hook.
 - Traces, screenshots and videos are kept on failure for troubleshooting.
