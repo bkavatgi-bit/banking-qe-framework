@@ -36,3 +36,4 @@ Override the target with `BASE_URL=https://your-host/parabank/ npm test`.
 - Balance checks read the values before and after a transfer instead of hard-coding amounts, so they survive changes in the demo data.
 - Locators prefer roles and visible text, with IDs only where the app gives no better hook.
 - Traces, screenshots and videos are kept on failure for troubleshooting.
+- ParaBank is a shared public demo, so tests use unique users, 2 workers and one retry to  stay stable. A test that only passes on retry is reported as flaky in the HTML report.
