@@ -11,7 +11,7 @@ demonstrate web and API automation, CI/CD and AI-assisted defect analysis.
 ## Roadmap
 - [x] Phase 1: UI automation with page objects and fixtures (registration, login, open account, funds transfer with balance checks)
 - [x] Phase 2: API automation (Playwright API tests, hybrid API+UI test, Postman collection)
-- [ ] Phase 3: GitHub Actions CI with HTML report, traces and screenshots
+- [x] Phase 3: GitHub Actions CI with HTML report, traces and screenshots
 - [ ] Phase 4: AI-assisted failure analysis (group failures, suggest root causes)
 
 ## Project structure
