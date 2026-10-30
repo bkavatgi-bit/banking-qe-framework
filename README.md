@@ -6,6 +6,8 @@ demonstrate web and API automation, CI/CD and AI-assisted defect analysis.
 
 > Uses only a public demo app and dummy data. No employer code or data.
 
+[![Playwright Tests](https://github.com/bkavatgi-bit/banking-qe-framework/actions/workflows/playwright.yml/badge.svg)](https://github.com/bkavatgi-bit/banking-qe-framework/actions/workflows/playwright.yml)
+
 ## Roadmap
 - [x] Phase 1: UI automation with page objects and fixtures (registration, login, open account, funds transfer with balance checks)
 - [x] Phase 2: API automation (Playwright API tests, hybrid API+UI test, Postman collection)
