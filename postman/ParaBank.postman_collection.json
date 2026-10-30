@@ -1,0 +1,248 @@
+{
+  "info": {
+    "name": "ParaBank REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Run requests 1 to 5 in order. Set username and password to a customer registered on ParaBank first."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://parabank.parasoft.com/parabank"
+    },
+    {
+      "key": "username",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "customerId",
+      "value": ""
+    },
+    {
+      "key": "checkingId",
+      "value": ""
+    },
+    {
+      "key": "savingsId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status is 200', () => pm.response.to.have.status(200));",
+              "const customer = pm.response.json();",
+              "pm.test('customer id is returned', () => pm.expect(customer.id).to.be.a('number'));",
+              "pm.collectionVariables.set('customerId', customer.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services/bank/login/{{username}}/{{password}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "bank",
+            "login",
+            "{{username}}",
+            "{{password}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. Get customer accounts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status is 200', () => pm.response.to.have.status(200));",
+              "const accounts = pm.response.json();",
+              "pm.test('at least one account', () => pm.expect(accounts.length).to.be.above(0));",
+              "pm.collectionVariables.set('checkingId', accounts[0].id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services/bank/customers/{{customerId}}/accounts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "bank",
+            "customers",
+            "{{customerId}}",
+            "accounts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Create savings account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status is 200', () => pm.response.to.have.status(200));",
+              "const account = pm.response.json();",
+              "pm.test('type is SAVINGS', () => pm.expect(account.type).to.eql('SAVINGS'));",
+              "pm.collectionVariables.set('savingsId', account.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services/bank/createAccount?customerId={{customerId}}&newAccountType=1&fromAccountId={{checkingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "bank",
+            "createAccount"
+          ],
+          "query": [
+            {
+              "key": "customerId",
+              "value": "{{customerId}}"
+            },
+            {
+              "key": "newAccountType",
+              "value": "1"
+            },
+            {
+              "key": "fromAccountId",
+              "value": "{{checkingId}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Transfer funds",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status is 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services/bank/transfer?fromAccountId={{checkingId}}&toAccountId={{savingsId}}&amount=25",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "bank",
+            "transfer"
+          ],
+          "query": [
+            {
+              "key": "fromAccountId",
+              "value": "{{checkingId}}"
+            },
+            {
+              "key": "toAccountId",
+              "value": "{{savingsId}}"
+            },
+            {
+              "key": "amount",
+              "value": "25"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Get checking account (check balance)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('balance is a number', () => pm.expect(pm.response.json().balance).to.be.a('number'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services/bank/accounts/{{checkingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "bank",
+            "accounts",
+            "{{checkingId}}"
+          ]
+        }
+      }
+    }
+  ]
+}

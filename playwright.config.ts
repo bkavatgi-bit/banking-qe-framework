@@ -7,7 +7,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 1,
-  workers: 2,
+  workers: 2 ,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     // Trailing slash matters: page.goto('register.htm') resolves under /parabank/
