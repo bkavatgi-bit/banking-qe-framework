@@ -38,21 +38,31 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
-      - name: Wait for ParaBank to start
+      - name: Initialize ParaBank database and wait until it is ready
         run: |
-          for i in $(seq 1 60); do
-            if curl -fsS -o /dev/null http://localhost:8080/parabank/index.htm; then
-              echo "ParaBank is up"
+          BASE=http://localhost:8080/parabank
+          # A fresh container may need its database initialized (best effort).
+          curl -sS -X POST -o /dev/null -w "initializeDB: HTTP %{http_code}\n" "$BASE/services/bank/initializeDB" || true
+          # Ready = the seeded demo customer (john / demo) can log in through the API.
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /tmp/login.out -w "%{http_code}" -H "Accept: application/json" "$BASE/services/bank/login/john/demo" || true)
+            echo "Attempt $i: login HTTP $code"
+            if [ "$code" = "200" ]; then
+              echo "ParaBank is ready"
               exit 0
             fi
-            echo "Waiting for ParaBank ($i/60)..."
             sleep 3
           done
-          echo "ParaBank did not start in time"
+          echo "ParaBank was not ready in time. Last response:"
+          cat /tmp/login.out
           exit 1
 
       - name: Run Playwright tests
         run: npx playwright test
+
+      - name: Show ParaBank container logs
+        if: ${{ failure() }}
+        run: docker logs ${{ job.services.parabank.id }} 2>&1 | tail -200
 
       - name: Upload HTML report
         if: ${{ !cancelled() }}
