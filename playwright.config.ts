@@ -8,7 +8,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 1,
   workers: 2 ,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'reports/results.json' }]],
   use: {
     // Trailing slash matters: page.goto('register.htm') resolves under /parabank/
     baseURL: process.env.BASE_URL ?? 'https://parabank.parasoft.com/parabank/',

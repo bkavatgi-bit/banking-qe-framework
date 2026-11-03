@@ -60,6 +60,12 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
+      - name: Analyze failures
+        if: ${{ failure() }}
+        run: node tools/analyze-failures.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
       - name: Show ParaBank container logs
         if: ${{ failure() }}
         run: docker logs ${{ job.services.parabank.id }} 2>&1 | tail -200

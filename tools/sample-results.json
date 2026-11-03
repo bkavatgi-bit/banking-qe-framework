@@ -1,0 +1,206 @@
+{
+  "suites": [
+    {
+      "title": "ui/auth.spec.ts",
+      "file": "ui/auth.spec.ts",
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication",
+          "specs": [
+            {
+              "title": "@smoke new customer can register",
+              "file": "ui/auth.spec.ts",
+              "line": 4,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "unexpected",
+                  "results": [
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText(/Your account was created successfully/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n  - waiting for getByText(/Your account was created successfully/i)"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText(/Your account was created successfully/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n  - waiting for getByText(/Your account was created successfully/i)"
+                        }
+                      ]
+                    },
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText(/Your account was created successfully/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n  - waiting for getByText(/Your account was created successfully/i)"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText(/Your account was created successfully/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n  - waiting for getByText(/Your account was created successfully/i)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "@smoke registered customer can log out and log back in",
+              "file": "ui/auth.spec.ts",
+              "line": 11,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "unexpected",
+                  "results": [
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText(/Your account was created successfully/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n  - waiting for getByText(/Your account was created successfully/i)"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText(/Your account was created successfully/i)\nExpected: visible\nError: element(s) not found\n\nCall log:\n  - waiting for getByText(/Your account was created successfully/i)"
+                        }
+                      ]
+                    },
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "Test timeout of 30000ms exceeded."
+                      },
+                      "errors": [
+                        {
+                          "message": "Test timeout of 30000ms exceeded."
+                        },
+                        {
+                          "message": "Test timeout of 30000ms exceeded.\n\nError: locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for locator('[id=\"customer.firstName\"]')"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "@regression login fails with invalid credentials",
+              "file": "ui/auth.spec.ts",
+              "line": 28,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "unexpected",
+                  "results": [
+                    {
+                      "status": "timedOut",
+                      "error": {
+                        "message": "Test timeout of 30000ms exceeded."
+                      },
+                      "errors": [
+                        {
+                          "message": "Test timeout of 30000ms exceeded."
+                        },
+                        {
+                          "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByRole('button', { name: 'Log Inn' })"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api/bank.api.spec.ts",
+      "file": "api/bank.api.spec.ts",
+      "specs": [],
+      "suites": [
+        {
+          "title": "Bank REST API",
+          "specs": [
+            {
+              "title": "@smoke @api login returns the registered customer",
+              "file": "api/bank.api.spec.ts",
+              "line": 4,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "unexpected",
+                  "results": [
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "login failed with status 500\n\nExpect \"toBeTruthy\" failed"
+                      },
+                      "errors": [
+                        {
+                          "message": "login failed with status 500\n\nExpect \"toBeTruthy\" failed"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "@smoke @api funds transfer moves money between accounts",
+              "file": "api/bank.api.spec.ts",
+              "line": 43,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "unexpected",
+                  "results": [
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "Error: expect(received).toBeCloseTo(expected, precision)\n\nExpected: 450\nReceived: 500"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: expect(received).toBeCloseTo(expected, precision)\n\nExpected: 450\nReceived: 500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "@smoke @api customer can create a savings account",
+              "file": "api/bank.api.spec.ts",
+              "line": 32,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "flaky",
+                  "results": [
+                    {
+                      "status": "failed",
+                      "error": {
+                        "message": "Test timeout of 30000ms exceeded."
+                      },
+                      "errors": [
+                        {
+                          "message": "Test timeout of 30000ms exceeded."
+                        },
+                        {
+                          "message": "Test timeout of 30000ms exceeded.\n\nError: locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for locator('[id=\"customer.firstName\"]')"
+                        }
+                      ]
+                    },
+                    {
+                      "status": "passed"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
