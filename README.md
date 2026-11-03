@@ -12,7 +12,7 @@ demonstrate web and API automation, CI/CD and AI-assisted defect analysis.
 - [x] Phase 1: UI automation with page objects and fixtures (registration, login, open account, funds transfer with balance checks)
 - [x] Phase 2: API automation (Playwright API tests, hybrid API+UI test, Postman collection)
 - [x] Phase 3: GitHub Actions CI with HTML report, traces and screenshots
-- [ ] Phase 4: AI-assisted failure analysis (group failures, suggest root causes)
+- [x] Phase 4: AI-assisted failure analysis (group failures, suggest root causes)
 
 ## Project structure
 ```
@@ -25,6 +25,7 @@ tests/ui/       UI specs, tagged @smoke / @regression
 tests/api/      API specs, tagged @api
 tests/hybrid/   Tests that act through the API and verify in the UI
 postman/        Postman collection for manual and exploratory API checks
+tools/report    Failure analysis script (reads the Playwright JSON)
 ```
 
 ## Getting started
@@ -38,6 +39,7 @@ npm run test:hybrid     # API + UI tests
 npm run test:smoke      # only @smoke tests
 npm run test:headed     # watch the browser
 npm run report          # open the HTML report
+npm run analyze         # group failures from the last run and suggest likely causes
 ```
 Override the target with `BASE_URL=https://your-host/parabank/ npm test`.
 
@@ -47,9 +49,11 @@ variables to a customer you registered on the ParaBank site, then run requests 1
 Each request has assertions and passes ids to the next request through collection variables.
 
 ## Design notes
+`npm run analyze` reads the Playwright JSON report, groups failed and flaky tests by error signature, labels each group with a likely cause (environment, timeout, assertion, API error) and prints the locator a test was waiting for. In CI the report appears in the run summary when tests fail. If `ANTHROPIC_API_KEY` is set, Claude adds a root-cause hypothesis per group. The output is a triage aid to verify against the trace, not a verdict.
+
 - Every test registers its own unique user, so tests are independent and parallel-safe.
 - ParaBank has no registration API, so API tests create the customer through the UI form and then look it up through the REST login endpoint.
 - Balance checks read the values before and after a transfer instead of hard-coding amounts, so they survive changes in the demo data.
 - Locators prefer roles and visible text, with IDs only where the app gives no better hook.
 - Traces, screenshots and videos are kept on failure for troubleshooting.
-- CI runs the tests against ParaBank started from its official Docker image, because the public demo rate-limits shared CI runner IPs. Locally, the tests default to the public demo site.
+- CI runs the tests against ParaBank started from its official Docker image, because the public demo rate-limits shared CI runner IPs. Locally, the tests default to the public demo site. Local runs against the public demo can be intermittently flaky because it is a shared, rate-limited service.
